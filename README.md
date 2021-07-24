@@ -2,7 +2,7 @@
 
 # Laravel Document Running Number Generator
 
-แพคเกจสำหรับการสร้าง เลขที่เอกสาร สำหรับ Laravel โดยสร้างสามารถระบุ ตัวอักษร นำหน้า, ต่อท้าย, จำนวนหลักตัวเลข ได้เอง
+แพคเกจ laravel สำหรับการสร้าง เลขที่เอกสาร โดยสร้างสามารถระบุ ตัวอักษร นำหน้า, ต่อท้าย, จำนวนหลักตัวเลข ได้เอง
 
 ## การติดตั้ง
 ```php
@@ -20,7 +20,29 @@ $documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
 $docNumber = $documentNumberer->generate();
 ```
 
+โดยค่าเริ่มต้น เลขที่เอกสารจะเป็น 
 
+นำหน้าด้วย ปีปัจจุบัน 2 digit และ เดือนปัจจุบัน 2 digit เข่น ถ้าวันนี้วันที่ 20/07/2021 เลขนำหน้าเอกสารจะเป็น **2107**000001
+
+ความยาวของ running number จะเป็น 6 หลัก เริ่มต้องด้วย 1 เช่น
+2107**000001**
+
+ต่อท้าย - ไม่มี
+
+### กรณีต้องการเปลี่ยน การสร้างเลขที่เอกสาร เช่น ต้องการ 
+- นำหน้าด้วย INV- 
+- มี running number 3 หลัก
+- ค่อท้ายด้วย -X
+
+ตัวอย่าง INV-001-X
+```php
+$documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
+$docNumber = $documentNumberer
+    ->prefix("INV-")
+    ->padLength(3)
+    ->suffix("-X")
+    ->generate();
+```
 ## License
 The MIT License (MIT)
 
