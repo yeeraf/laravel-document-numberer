@@ -12,9 +12,8 @@
         }
     ],
     "autoload": {
-        "App\\": "app/",
         "psr-4": {
-            "Yeeraf\\DocumentNumberer\\": "src/"
+            "Yeeraf\\DocumentNumberer\\": "src"
         }
     },
     "autoload-dev": {

@@ -1,5 +1,6 @@
 <?php
-namespace Yeeraf\DocumentNumberer\src\Facades;
+
+namespace Yeeraf\DocumentNumberer\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
