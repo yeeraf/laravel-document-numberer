@@ -40,7 +40,7 @@ $docNumber = $documentNumberer->generate();
 - เปลี่ยน padding string จาก **0 -> #**
 - ท้ายด้วย **-X**
 
-ตัวอย่าง INV-001-X
+ตัวอย่าง INV-##1-X
 ```php
 $documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
 $docNumber = $documentNumberer
