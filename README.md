@@ -15,7 +15,7 @@ php artisan migration
 ## ตัวอย่างการใข้งาน
 ```php
 $documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
-    $docNumber = $documentNumberer->generate();
+$docNumber = $documentNumberer->generate();
 ```
 
 
