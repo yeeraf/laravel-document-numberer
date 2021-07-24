@@ -44,11 +44,11 @@ $docNumber = $documentNumberer->generate();
 ```php
 $documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
 $docNumber = $documentNumberer
-    ->prefix("INV-")
-    ->padLength(3)
-    ->padString("#")
-    ->suffix("-X")
-    ->generate();
+                ->prefix("INV-")
+                ->padLength(3)
+                ->padString("#")
+                ->suffix("-X")
+                ->generate();
 ```
 ## License
 The MIT License (MIT)
