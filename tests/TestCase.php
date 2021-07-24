@@ -2,14 +2,10 @@
 
 namespace Yeeraf\DocumentNumberer\Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Yeeraf\DocumentNumberer\DocumentNumberer;
 use Yeeraf\DocumentNumberer\PackageServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-
-    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -28,4 +24,5 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         // perform environment setup
     }
+
 }

@@ -22,8 +22,6 @@ class CreateDocumentNumber extends Migration
             $table->string("pad_type")->nullable();
             $table->unsignedInteger("current_number");
             $table->timestamps();
-
-            // $table->unique(['prefix', 'suffix', 'pad_length', 'pad_string', 'pad_type'], 'dn_unique');
         });
     }
 

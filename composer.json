@@ -1,5 +1,5 @@
 {
-    "name": "yeeraf/laravel-ducument-numberer",
+    "name": "yeeraf/laravel-document-numberer",
     "description": "A Laravel package for create document running number",
     "type": "library",
     "require": {
