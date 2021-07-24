@@ -1,3 +1,5 @@
+![example workflow](https://github.com/yeeraf/laravel-ducument-numberer/actions/workflows/test.yml/badge.svg)
+
 # Laravel Document Running Number Generator
 
 แพคเกจสำหรับการสร้าง เลขที่เอกสาร สำหรับ Laravel โดยสร้างสามารถระบุ ตัวอักษร นำหน้า, ต่อท้าย, จำนวนหลักตัวเลข ได้เอง
