@@ -2,7 +2,12 @@
 
 # Laravel Document Running Number Generator
 
-แพคเกจ laravel สำหรับการสร้าง เลขที่เอกสาร โดยสร้างสามารถระบุ ตัวอักษร นำหน้า, ต่อท้าย, จำนวนหลักตัวเลข ได้เอง
+แพคเกจ laravel สำหรับการสร้าง เลขที่เอกสาร โดยสร้างสามารถระบุ ตัวอักษร นำหน้า, ต่อท้าย, จำนวนหลักตัวเลข ได้เอง เหมาระกับการใช้กับพวกเอกสารใบแจ้งหนี้ ใบเสร็จรับเงิน หรือเอกสารต่างๆได้ ตัวอย่างเลขที่เอกสาร
+
+- INV-000001
+- INV2101-0001
+- REP-0000001
+- QT-#####1
 
 ## การติดตั้ง
 ```php
@@ -32,6 +37,7 @@ $docNumber = $documentNumberer->generate();
 ### กรณีต้องการเปลี่ยน การสร้างเลขที่เอกสาร เช่น ต้องการ 
 - นำหน้าด้วย INV- 
 - มี running number 3 หลัก
+- เปลี่ยน padding string จาก 0 -> # 
 - ท้ายด้วย -X
 
 ตัวอย่าง INV-001-X
@@ -40,6 +46,7 @@ $documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
 $docNumber = $documentNumberer
     ->prefix("INV-")
     ->padLength(3)
+    ->padString("#")
     ->suffix("-X")
     ->generate();
 ```
