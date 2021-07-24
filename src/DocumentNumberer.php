@@ -5,6 +5,15 @@ namespace Yeeraf\DocumentNumberer;
 
 use Yeeraf\DocumentNumberer\Models\DocumentNumber;
 
+/**
+ * Generate Running Number
+ * $prefix 2 digit of year and month, example 2101
+ * $suffix -
+ * $padLength 6
+ * $padString 0
+ * $padType string left
+ * $autoExtend bool true
+ */
 class DocumentNumberer
 {
     protected $prefix;
@@ -13,8 +22,6 @@ class DocumentNumberer
     protected $padLength;
     protected $padType;
     protected $autoExtend;
-
-    protected $currentDocumentNumber;
 
     public function __construct()
     {
@@ -26,11 +33,55 @@ class DocumentNumberer
         $this->autoExtend = true;
     }
 
+    /**
+     *
+     */
     public function generate()
     {
         $dn = $this->getCurrentDocumentNumber();
 
         return  $dn->prefix . $this->createRunningnumber($dn) . $dn->suffix;
+    }
+
+
+    public function getCurrentDocumentNumber(): DocumentNumber
+    {
+        $dn = DocumentNumber::firstOrCreate(
+            [
+                "prefix" => $this->prefix,
+                "suffix" => $this->suffix,
+                "pad_length" => $this->padLength,
+                "pad_string" => $this->padString,
+                "pad_type" => $this->padType === "right" ? "right" : 'left',
+            ],
+            [
+                "current_number" => 0,
+            ]
+        );
+
+        $dn->increment('current_number');
+
+        return $dn;
+    }
+
+
+    public  function createRunningnumber($dn): string
+    {
+        $padType =  $dn->pad_type === "right" ? STR_PAD_RIGHT : STR_PAD_LEFT;
+
+        $generated = str_pad(
+            $dn->current_number,
+            $dn->pad_length,
+            $dn->pad_string,
+            $padType
+        );
+
+        if (!$this->autoExtend &&  strlen($generated) > (int) $dn->pad_length) {
+            // dd(strlen($generated), (int) $dn->pad_length);
+            throw new \Exception("running number lenght go over pad lenght", 1);
+        }
+
+        return $generated;
     }
 
     public function prefix(string $prefix)
@@ -75,44 +126,4 @@ class DocumentNumberer
         return $this;
     }
 
-
-    public function getCurrentDocumentNumber(): DocumentNumber
-    {
-        $dn = DocumentNumber::firstOrCreate(
-            [
-                "prefix" => $this->prefix,
-                "suffix" => $this->suffix,
-                "pad_length" => $this->padLength,
-                "pad_string" => $this->padString,
-                "pad_type" => $this->padType === "right" ? "right" : 'left',
-            ],
-            [
-                "current_number" => 0,
-            ]
-        );
-
-        $dn->increment('current_number');
-
-        return $dn;
-    }
-
-
-    public  function createRunningnumber($dn): string
-    {
-        $padType =  $dn->pad_type === "right" ? STR_PAD_RIGHT : STR_PAD_LEFT;
-
-        $generated = str_pad(
-            $dn->current_number,
-            $dn->pad_length,
-            $dn->pad_string,
-            $padType
-        );
-
-        if (!$this->autoExtend &&  strlen($generated) > (int) $dn->pad_length) {
-            // dd(strlen($generated), (int) $dn->pad_length);
-            throw new \Exception("running number lenght go over pad lenght", 1);
-        }
-
-        return $generated;
-    }
 }
