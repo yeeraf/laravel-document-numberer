@@ -15,6 +15,7 @@ class CreateDocumentNumber extends Migration
     {
         Schema::create('document_numbers', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->nullable();
             $table->string("prefix");
             $table->string("suffix");
             $table->integer("pad_length");

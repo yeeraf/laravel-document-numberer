@@ -50,6 +50,26 @@ $docNumber = $documentNumberer
                 ->suffix("-X")
                 ->generate();
 ```
+
+กรณีต้องการให้เลขที่เอกสาร  2 ประเภทมี format เดียวกัน แต่ต้องการให้ running แยกกัน เข่น
+
+เลขแจ้งหนี้ เริ่มที่ 2107000001, 2107000002, 2107000003, ...
+
+เลขใบเสร็จรับเงิน เริ่มที่ 2107000001, 2107000002, 2107000003, ...
+
+ระบบสามารถแยกประเภทได้ดังนี้
+```php
+// ใบแจ้งหนี้
+$documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
+$docNumber = $documentNumberer->type("invoice")->generate();
+```
+
+```php
+// ใบเสร็จรับเงิน
+$documentNumberer = new \Yeeraf\DocumentNumberer\DocumentNumberer;
+$docNumber = $documentNumberer->type("receipt")->generate();
+```
+
 ## License
 The MIT License (MIT)
 

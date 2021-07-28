@@ -26,6 +26,18 @@ class DocumentNumbererTest extends TestCase
         $this->assertEquals("2101000001", $documentNumber->generate());
     }
 
+    /** @test */
+    public function it_can_set_type_to_support_same_number_but_different_document_type()
+    {
+        $testDate = Carbon::create(2021, 1, 1);
+        Carbon::setTestNow($testDate);
+
+        $documentNumber = new DocumentNumberer();
+
+        $this->assertEquals("2101000001", $documentNumber->type("invoice")->generate());
+        $this->assertEquals("2101000001", $documentNumber->type("receipt")->generate());
+    }
+
 
     /** @test */
     public function it_can_set_prefix()

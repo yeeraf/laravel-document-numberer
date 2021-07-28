@@ -26,6 +26,7 @@ class DocumentNumberer
     public function __construct()
     {
         $this->prefix = \Carbon\Carbon::today()->format("ym");
+        $this->type = "";
         $this->suffix = "";
         $this->padLength = 6;
         $this->padString = "0";
@@ -48,6 +49,7 @@ class DocumentNumberer
     {
         $dn = DocumentNumber::firstOrCreate(
             [
+                "type" => $this->type,
                 "prefix" => $this->prefix,
                 "suffix" => $this->suffix,
                 "pad_length" => $this->padLength,
@@ -82,6 +84,13 @@ class DocumentNumberer
         }
 
         return $generated;
+    }
+
+    public function type(string $type)
+    {
+        $this->type = $type ?? $this->type;
+
+        return $this;
     }
 
     public function prefix(string $prefix)
