@@ -12,7 +12,7 @@
 ## การติดตั้ง
 
 ```php
-composer require yeeraf/laravel-ducument-numberer
+composer require yeeraf/laravel-document-numberer
 ```
 
 หลังจากติดตั้งแล้วจะต้องทำการ run คำสั่ง migration สำหรับสร้าง table document_numbers เพื่อเก็บข้อมูลการสร้างเลขที่เอกสาร
