@@ -86,9 +86,9 @@ class DocumentNumberer
         return $generated;
     }
 
-    public function type(string $type)
+    public function name(string $name)
     {
-        $this->type = $type ?? $this->type;
+        $this->name = $name ?? $this->name;
 
         return $this;
     }
@@ -134,5 +134,4 @@ class DocumentNumberer
 
         return $this;
     }
-
 }

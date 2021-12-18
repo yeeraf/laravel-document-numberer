@@ -4,9 +4,8 @@ namespace Tests\Feature\DocumentNumberer;
 
 use Carbon\Carbon;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;;
 
-;
 use Yeeraf\DocumentNumberer\Tests\TestCase;
 use Yeeraf\DocumentNumberer\DocumentNumberer;
 use Yeeraf\DocumentNumberer\Models\DocumentNumber;
@@ -27,15 +26,15 @@ class DocumentNumbererTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_type_to_support_same_number_but_different_document_type()
+    public function it_can_set_name_to_support_same_number_but_different_document_type()
     {
         $testDate = Carbon::create(2021, 1, 1);
         Carbon::setTestNow($testDate);
 
         $documentNumber = new DocumentNumberer();
 
-        $this->assertEquals("2101000001", $documentNumber->type("invoice")->generate());
-        $this->assertEquals("2101000001", $documentNumber->type("receipt")->generate());
+        $this->assertEquals("2101000001", $documentNumber->name("invoice")->generate());
+        $this->assertEquals("2101000001", $documentNumber->name("receipt")->generate());
     }
 
 
