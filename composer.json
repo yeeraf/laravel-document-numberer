@@ -3,7 +3,7 @@
     "description": "A Laravel package for create document running number",
     "type": "library",
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^8.0"
     },
     "authors": [
         {
