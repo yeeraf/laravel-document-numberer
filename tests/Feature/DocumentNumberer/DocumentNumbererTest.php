@@ -76,7 +76,7 @@ class DocumentNumbererTest extends TestCase
 
         $documentNumber = new DocumentNumberer();
 
-        $this->assertEquals("210101", $documentNumber->padlength(2)->generate());
+        $this->assertEquals("210101", $documentNumber->padLength(2)->generate());
     }
 
     /** @test */
@@ -103,7 +103,8 @@ class DocumentNumbererTest extends TestCase
                 ->suffix("-X")
                 ->padType('left')
                 ->padString('_')
-                ->padlength('4')
+                ->padLength('4')
+                ->teamId(true)
                 ->generate()
         );
     }
@@ -117,7 +118,7 @@ class DocumentNumbererTest extends TestCase
         $documentNumberer = new DocumentNumberer();
         $documentNumberer->generate();
 
-        // create documentnumber record
+        // create document number record
         $dn = DocumentNumber::first();
         $dn->current_number = 999999;
         $dn->save();
@@ -129,24 +130,32 @@ class DocumentNumbererTest extends TestCase
     /** @test */
     public function it_can_be_set_to_prevent_auto_extend_running_number()
     {
+        $documentNumber = new DocumentNumberer();
+
+        $this->assertEquals(
+            "INV-___1-X",
+            $documentNumber
+                ->prefix("INV-")
+                ->suffix("-X")
+                ->padType('left')
+                ->padString('_')
+                ->padLength('4')
+                ->generate()
+        );
+
+        // $this->assertEquals("21011000000", $documentNumberer->generate());
+    }
+
+    /** @test */
+    public function it_can_separate_by_team_id()
+    {
         $testDate = Carbon::create(2021, 1, 1);
         Carbon::setTestNow($testDate);
 
-        $documentNumberer = new DocumentNumberer();
-        $documentNumberer->autoExtend(false)->generate();
+        $documentNumber = new DocumentNumberer();
+        $this->assertEquals("2101000001", $documentNumber->teamId(1)->generate());
 
-        // create documentnumber record
-        $dn = DocumentNumber::first();
-        $dn->current_number = 999999;
-        $dn->save();
-
-
-        $this->expectException(\Exception::class);
-        $this->expectExceptionCode(1);
-        $this->expectExceptionMessage("running number lenght go over pad lenght");
-
-        $documentNumberer->generate();
-
-        // $this->assertEquals("21011000000", $documentNumberer->generate());
+        $documentNumber = new DocumentNumberer();
+        $this->assertEquals("2101000001", $documentNumber->teamId("2")->generate());
     }
 }

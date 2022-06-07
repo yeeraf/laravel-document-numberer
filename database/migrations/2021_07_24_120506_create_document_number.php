@@ -21,6 +21,7 @@ class CreateDocumentNumber extends Migration
             $table->integer("pad_length");
             $table->string("pad_string");
             $table->string("pad_type")->nullable();
+            $table->string("team_id")->default("");
             $table->unsignedInteger("current_number");
             $table->timestamps();
         });

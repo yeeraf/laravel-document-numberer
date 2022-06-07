@@ -21,6 +21,7 @@ class DocumentNumberer
     protected $padString;
     protected $padLength;
     protected $padType;
+    protected $teamId;
     protected $autoExtend;
 
     public function __construct()
@@ -32,6 +33,7 @@ class DocumentNumberer
         $this->padString = "0";
         $this->padType = "left";
         $this->autoExtend = true;
+        $this->teamId = "";
     }
 
     /**
@@ -41,9 +43,8 @@ class DocumentNumberer
     {
         $dn = $this->getCurrentDocumentNumber();
 
-        return  $dn->prefix . $this->createRunningnumber($dn) . $dn->suffix;
+        return  $dn->prefix . $this->createRunningNumber($dn) . $dn->suffix;
     }
-
 
     public function getCurrentDocumentNumber(): DocumentNumber
     {
@@ -55,19 +56,19 @@ class DocumentNumberer
                 "pad_length" => $this->padLength,
                 "pad_string" => $this->padString,
                 "pad_type" => $this->padType === "right" ? "right" : 'left',
+                "team_id" => $this->teamId,
             ],
             [
                 "current_number" => 0,
             ]
         );
-
         $dn->increment('current_number');
 
         return $dn;
     }
 
 
-    public  function createRunningnumber($dn): string
+    public  function createRunningNumber($dn): string
     {
         $padType =  $dn->pad_type === "right" ? STR_PAD_RIGHT : STR_PAD_LEFT;
 
@@ -80,41 +81,41 @@ class DocumentNumberer
 
         if (!$this->autoExtend &&  strlen($generated) > (int) $dn->pad_length) {
             // dd(strlen($generated), (int) $dn->pad_length);
-            throw new \Exception("running number lenght go over pad lenght", 1);
+            throw new \Exception("running number length go over pad length", 1);
         }
 
         return $generated;
     }
 
-    public function name(string $name)
+    public function name(string $name): self
     {
         $this->name = $name ?? $this->name;
 
         return $this;
     }
 
-    public function prefix(string $prefix)
+    public function prefix(string $prefix): self
     {
         $this->prefix = $prefix ?? $this->prefix;
 
         return $this;
     }
 
-    public function suffix(string $suffix)
+    public function suffix(string $suffix): self
     {
         $this->suffix = $suffix ?? $this->suffix;
 
         return $this;
     }
 
-    public function padLength(string $padLength)
+    public function padLength(string $padLength): self
     {
         $this->padLength = $padLength ?? $this->padLength;
 
         return $this;
     }
 
-    public function padString(string $padString)
+    public function padString(string $padString): self
     {
         $this->padString = $padString ?? $this->padString;
 
@@ -128,7 +129,14 @@ class DocumentNumberer
         return $this;
     }
 
-    public function autoExtend(bool $autoExtend = true)
+    public function teamId(string|int $teamId): self
+    {
+        $this->teamId = $teamId;
+
+        return $this;
+    }
+
+    public function autoExtend(bool $autoExtend = true): self
     {
         $this->autoExtend = $autoExtend === true ? true : false;
 
