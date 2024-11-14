@@ -18,7 +18,7 @@ jobs:
     steps:
     # Checkout the repository
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Set up PHP
     - name: Setup PHP
@@ -34,7 +34,7 @@ jobs:
 
     # Cache composer dependencies
     - name: Cache Composer Dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
