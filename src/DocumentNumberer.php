@@ -17,6 +17,8 @@ use Yeeraf\DocumentNumberer\Models\DocumentNumber;
 class DocumentNumberer
 {
     protected $prefix;
+
+    protected $name;
     protected $suffix;
     protected $padString;
     protected $padLength;
