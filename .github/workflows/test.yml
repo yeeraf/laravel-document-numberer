@@ -29,19 +29,25 @@ jobs:
     - name: Run Test
       run: ./vendor/bin/phpunit
 
-    - name: Generate Badge
+    # Generate a badge if tests pass
+    - name: Create Test Passed Badge
       if: success()
-      uses: schneegans/dynamic-badges-action@v1.4.0
+      uses: schneegans/dynamic-badges-action@v1.5.0
       with:
-        auth: ${{ secrets.SHIELDS_IO_API_TOKEN }} 
-        label: Tests (PHP ${{ matrix.php-version }}) 
-        message: Passing
-        color: green
-        namedLogo: phpunit
-        output: tests-badge-${{ matrix.php-version }}.svg
+        auth: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        filename: test-passed-badge-${{ matrix.php-version }}.svg
+        label: "Tests PHP ${{ matrix.php-version }}"
+        message: Passed
+        color: brightgreen
 
-    - name: Commit badge
-      uses: EndBug/add-and-commit@v9
-      with:
-        add: 'tests-badge-*.svg'
-        message: 'Update test badges'
+    # Upload the badge to the repository
+    - name: Upload Badge
+      if: success()
+      run: |
+        mv test-passed-badge-${{ matrix.php-version }}.svg public/
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add public/test-passed-badge-${{ matrix.php-version }}.svg
+        git commit -m "Add test passed badge for PHP ${{ matrix.php-version }}"
+        git push
