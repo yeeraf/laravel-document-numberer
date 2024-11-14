@@ -1,8 +1,5 @@
 ## Test Status
-![PHP 8.0](./public/test-passed-badge-8.0.svg)
-![PHP 8.1](./public/test-passed-badge-8.1.svg)
-![PHP 8.2](./public/test-passed-badge-8.2.svg)
-![PHP 8.3](./public/test-passed-badge-8.3.svg)
+[![Test](https://github.com/yeeraf/laravel-document-numberer/actions/workflows/test.yml/badge.svg)](https://github.com/yeeraf/laravel-document-numberer/actions/workflows/test.yml)
 
 # Laravel Document Running Number Generator
 

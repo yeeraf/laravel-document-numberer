@@ -1,70 +1,30 @@
-name: Laravel Test and Badge
+name: Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  run-tests:
+  laravel-tests:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [8.0, 8.1, 8.2, 8.3] # Add the PHP versions you want to test
-
+        php-version: ['8.0', '8.1', '8.2', '8.3'] # Specify the PHP versions you want to test
     steps:
-    # Checkout the repository
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    # Set up PHP
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+    - uses: actions/checkout@v3
+      
+    - uses: shivammathur/setup-php@v2
       with:
-        php-version: "${{ matrix.php-version }}"
-        extensions: mbstring, bcmath, intl, zip
+        php-version: ${{ matrix.php-version }}
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+        coverage: none
 
-    # Install dependencies using composer
     - name: Install Dependencies
-      run: |
-        composer install --prefer-dist --no-progress --no-suggest
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    # Cache composer dependencies
-    - name: Cache Composer Dependencies
-      uses: actions/cache@v4
-      with:
-        path: vendor
-        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: ${{ runner.os }}-composer-${{ matrix.php-version }}-
-
-    # Run tests with PHPUnit
-    - name: Run Tests
-      run: |
-        php artisan config:cache
-        ./vendor/bin/phpunit
-
-    # Generate a badge if tests pass
-    - name: Create Test Passed Badge
-      if: success()
-      uses: schneegans/dynamic-badges-action@v1.5.0
-      with:
-        auth: ${{ secrets.GITHUB_TOKEN }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        filename: test-passed-badge-${{ matrix.php-version }}.svg
-        label: "Tests PHP ${{ matrix.php-version }}"
-        message: Passed
-        color: brightgreen
-
-    # Upload the badge to the repository
-    - name: Upload Badge
-      if: success()
-      run: |
-        mv test-passed-badge-${{ matrix.php-version }}.svg public/
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add public/test-passed-badge-${{ matrix.php-version }}.svg
-        git commit -m "Add test passed badge for PHP ${{ matrix.php-version }}"
-        git push
+    
+    - name: Run Test
+      run: ./vendor/bin/phpunit
