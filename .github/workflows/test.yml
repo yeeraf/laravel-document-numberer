@@ -1,33 +1,50 @@
-name: Test
+name: Laravel Test and Badge
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  laravel-tests:
-
+  run-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['8.0', '8.1', '8.2', '8.3'] # Specify the PHP versions you want to test
+        php-version: [8.0, 8.1, 8.2, 8.3] # Add the PHP versions you want to test
+
     steps:
-    - uses: actions/checkout@v3
-      
-    - uses: shivammathur/setup-php@v2
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php-version }}
-        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-        coverage: none
+        php-version: "${{ matrix.php-version }}"
+        extensions: mbstring, bcmath, intl, zip
 
+    # Install dependencies using composer
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: |
+        composer install --prefer-dist --no-progress --no-suggest
 
-    
-    - name: Run Test
-      run: ./vendor/bin/phpunit
+    # Cache composer dependencies
+    - name: Cache Composer Dependencies
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-${{ matrix.php-version }}-
+
+    # Run tests with PHPUnit
+    - name: Run Tests
+      run: |
+        php artisan config:cache
+        ./vendor/bin/phpunit
 
     # Generate a badge if tests pass
     - name: Create Test Passed Badge
