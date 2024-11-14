@@ -1,7 +1,8 @@
-[![Tests (PHP 8.0)](tests-badge-8.0.svg)](tests-badge-8.0.svg)
-[![Tests (PHP 8.1)](tests-badge-8.1.svg)](tests-badge-8.1.svg)
-[![Tests (PHP 8.2)](tests-badge-8.2.svg)](tests-badge-8.2.svg)
-[![Tests (PHP 8.3)](tests-badge-8.3.svg)](tests-badge-8.3.svg)
+## Test Status
+![PHP 8.0](./public/test-passed-badge-8.0.svg)
+![PHP 8.1](./public/test-passed-badge-8.1.svg)
+![PHP 8.2](./public/test-passed-badge-8.2.svg)
+![PHP 8.3](./public/test-passed-badge-8.3.svg)
 
 # Laravel Document Running Number Generator
 
