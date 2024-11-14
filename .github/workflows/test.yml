@@ -28,3 +28,20 @@ jobs:
     
     - name: Run Test
       run: ./vendor/bin/phpunit
+
+    - name: Generate Badge
+      if: success()
+      uses: schneegans/dynamic-badges-action@v1.4.0
+      with:
+        auth: ${{ secrets.SHIELDS_IO_API_TOKEN }} 
+        label: Tests (PHP ${{ matrix.php-version }}) 
+        message: Passing
+        color: green
+        namedLogo: phpunit
+        output: tests-badge-${{ matrix.php-version }}.svg
+
+    - name: Commit badge
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'tests-badge-*.svg'
+        message: 'Update test badges'
